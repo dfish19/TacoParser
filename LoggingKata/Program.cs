@@ -52,7 +52,37 @@ namespace LoggingKata
 
             // Once you've looped through everything, you've found the two Taco Bells farthest away from each other.
 
+            ITrackable firstTacoBell = null;
+            ITrackable secondTacoBell = null;
+            double distance = 0;
 
+            for (int i = 0; i < locations.Length; i++)
+            {
+                var locA = locations[i];
+                var corA = new GeoCoordinate();
+                corA.Latitude = locA.Location.Latitude;
+                corA.Longitude = locA.Location.Longitude;
+
+                for (int s = 0; s < locations.Length; s++)
+                {
+                    var locB = locations[s];
+                    var corB = new GeoCoordinate();
+                    corB.Latitude = locB.Location.Latitude;
+                    corB.Longitude = locB.Location.Longitude;
+
+                    if(corA.GetDistanceTo(corB) > distance)
+                    {
+                        distance = corA.GetDistanceTo(corB);
+                        firstTacoBell= locA;
+                        secondTacoBell= locB;
+                    }
+                }
+                    
+            }
+
+            Console.WriteLine($"{firstTacoBell.Name} and {secondTacoBell.Name}");
+            var miles = distance * 0.000621371;
+            Console.WriteLine($"Distance:{miles}");
             
         }
     }
